@@ -1,48 +1,179 @@
-# DSH Agent Pet
+<p align="center">
+  <img src="assets/poses.png" alt="Momo's eight poses: idle, thinking, running_tool, waiting_approval, done, error, resting, greeting" width="100%">
+</p>
 
-DSH Agent Pet adds a small draggable companion to the lower-right corner of the DeepSeek Harness Web UI. Momo reacts to agent thinking, tool execution, pending approval, completion, and failure states.
+<h1 align="center">DSH Agent Pet</h1>
 
-## Install from a local checkout
+<p align="center">
+  <strong>A pet that lives in the corner of the DeepSeek Harness Web UI and changes pose with your agent.</strong>
+</p>
 
-Run from the DeepSeek Harness checkout:
+<p align="center">
+  It raises a paw while the agent thinks, runs while a tool executes, and sits up looking at you when it needs approval.<br>
+  Generate its look from one sentence — with your own API key, or by taking the prompt to any other image AI.
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2EA44F?style=flat" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/DSH%20profile-web-4D6BFE?style=flat" alt="DSH web profile">
+  <img src="https://img.shields.io/badge/node-%E2%89%A522.19-5FA04E?style=flat" alt="Node 22.19+">
+  <img src="https://img.shields.io/badge/dependencies-0-6b6880?style=flat" alt="Zero runtime dependencies">
+</p>
+
+<p align="center">
+  <a href="README.md">中文</a> · English
+</p>
+
+<p align="center">
+  <img src="assets/in-dsh.png" alt="Momo in the corner of a real DSH Web UI, running while a tool executes" width="100%">
+</p>
+
+---
+
+## One pose per state
+
+Most desktop pets are a single image faking motion with transforms. This one is not: **a single generation draws eight poses of the same pet**, and the UI switches to the matching cell as the agent's state changes.
+
+| State | Pose | When |
+| --- | --- | --- |
+| `idle` | standing, three-quarter view | nothing running |
+| `thinking` | paw at chin, looking up | the agent is thinking |
+| `running_tool` | running in profile | a tool is executing |
+| `waiting_approval` | sitting up, looking at you | waiting for your confirmation |
+| `done` | jumping, paws raised | finished |
+| `error` | head down, shoulders slumped | something failed |
+| `resting` | curled up asleep | reserved |
+| `greeting` | waving a paw | reserved |
+
+All eight come from **one generation**, so it is one character. Generating eight times separately yields eight similar-but-different animals — text-to-image has no memory, and character consistency is the whole difficulty here.
+
+The last two poses have no trigger yet; reserving the cells now means adding states later will not require regenerating artwork.
+
+---
+
+## Three ways to get a pet
+
+### 1. Do nothing
+
+The packaged cloud cat Momo ships with the plugin and animates across all six states. It is a hand-written SVG: no API key, no network.
+
+### 2. Draw one with your own API key
+
+<img src="assets/studio.png" alt="Pet Studio: name, description, style, eight-pose preview" width="420" align="right">
+
+Hover the pet and click 🎨. Enter a name, a description (8–800 characters), pick a style, and press "开始绘制".
+
+The plugin generates a transparent 4×2 sprite sheet and swaps it in immediately. "恢复默认" restores Momo.
+
+Style presets: `auto`, `pixel`, `sticker`, `plush`, `flat-vector`, `3d-toy`.
+
+Drawing needs an image API key, resolved from the DSH credential service as `OPENAI_API_KEY` by default. Without one the studio says so and sends nothing.
+
+<br clear="right">
+
+### 3. Draw it in another AI and import it (no API key)
+
+<img src="assets/export-prompt.png" alt="Exported sprite sheet prompt, ready to paste into any image AI" width="420" align="right">
+
+Expand "用别的 AI 生成" and press "生成提示词" for a **self-contained** prompt.
+
+Paste it into any image AI, ask for a transparent 4×2 sprite sheet, then press "导入精灵表 PNG" and pick the file.
+
+If that AI lays poses out differently, change the column/row inputs; `1×1` imports a single frame. The image dimensions must divide evenly by the grid.
+
+This path needs no credential and costs nothing.
+
+<br clear="right">
+
+---
+
+## Install
+
+Requires the DSH `web` profile.
 
 ```bash
-pnpm dsh plugin --profile web add /absolute/path/to/dsh-agent-pet
-pnpm dsh web
+dsh plugin --profile web add dsh-agent-pet
 ```
 
-## Install from GitHub
+From Git:
 
 ```bash
 dsh plugin --profile web add github:Noah-wang/dsh-agent-pet
 ```
 
-## Uninstall
+From a local checkout:
+
+```bash
+dsh plugin --profile web add /absolute/path/to/dsh-agent-pet
+```
+
+Restart the DSH Web UI afterwards. To uninstall:
 
 ```bash
 dsh plugin --profile web remove dsh-agent-pet
 ```
 
-Restart the Web UI after changing the installed plugin set.
+---
 
-## Pet Studio
+## Configuration
 
-Hover the pet and click 🎨 to open the studio. Enter a name, a visual description (8–800 characters), and a style preset, then press "开始绘制" to generate a transparent **eight-pose sprite sheet** that replaces the current pet. "恢复默认" restores the packaged Momo.
+Override in your profile's patch layer. Everything is optional.
 
-### One pose per state
+| Key | Default | Meaning |
+| --- | --- | --- |
+| `apiKeyEnv` | `OPENAI_API_KEY` | credential reference name |
+| `model` | `gpt-image-2` | image model |
+| `baseURL` | `https://api.openai.com/v1` | image endpoint; any OpenAI-compatible one works |
+| `quality` | `medium` | `low` / `medium` / `high` |
+| `dataDir` | `<DSH_HOME>/agent-pet` | where generated pets are stored |
+| `petFile` | packaged `pets/default/pet.md` | custom pet definition |
+| `idleAfterMs` | `2400` | milliseconds before returning to idle |
 
-A single generation draws the same pet in eight poses on a 4×2 grid, in this order: `idle`, `thinking`, `running_tool`, `waiting_approval`, `done`, `error`, `resting`, `greeting`. Generating eight separate images would yield eight different animals; one generation keeps the character consistent. The UI picks the matching cell with CSS `background-position` and never decodes the image. The last two poses have no trigger yet and are reserved.
+---
 
-### Generate in another AI (no API key needed)
+## Privacy
 
-Expand "用别的 AI 生成": fill in a name and description, press "生成提示词", copy the self-contained prompt into any image AI, ask it for a transparent 4×2 sprite sheet PNG, then press "导入精灵表 PNG" to bring it back. Adjust the column/row inputs if that AI lays the poses out differently; 1×1 imports a single frame. The image dimensions must divide evenly by the grid. This path costs nothing and needs no credential.
+**The plugin does not read conversation text, tool arguments, tool results, API keys, or any credential.** It observes agent lifecycle events and tool names only.
 
-Generation needs an image API key. The host resolves `OPENAI_API_KEY` through the DSH credential service; the studio says so and sends nothing when the key is missing. `apiKeyEnv`, `model` (default `gpt-image-2`), `baseURL`, `quality`, and `dataDir` are configurable. Style presets: `auto`, `pixel`, `sticker`, `plush`, `flat-vector`, `3d-toy`.
+The browser half makes same-origin requests to the local DSH host and nothing else. During generation the key is resolved inside the host process by the DSH credential service; it never reaches browser state, API responses, logs, or exported pet metadata.
 
-Generation runs only on an explicit click, may incur provider charges, and is limited to one request at a time (`409` otherwise). Only a valid bounded PNG is stored, writes are atomic, and the key never reaches browser state, responses, or stored metadata.
+Only bytes carrying a valid PNG signature are stored; generated SVG or HTML is rejected rather than executed. Full boundaries in [`SECURITY.md`](SECURITY.md).
 
-## Privacy and permissions
+---
 
-The plugin reads agent lifecycle events and tool names only. It does not retain conversation messages, tool arguments, tool results, credentials, or browsing data. The client performs same-origin requests to the local DSH host and loads only the local avatar. Generation requests carry only the name, description, and style you type in the studio.
+## Interaction and customization
 
-See [SECURITY.md](SECURITY.md) before adding executable community extensions.
+- Drag to move; × hides it into a 🐾 button that brings it back
+- Honors `prefers-reduced-motion` by disabling every animation
+- Edit `pets/default/pet.md` to change the name, artwork, and the short line shown per state. `avatar` accepts only a relative path beside `pet.md`; the Markdown never executes scripts, commands, or HTML
+
+Drive states locally while developing:
+
+```bash
+curl -X POST http://127.0.0.1:3080/api/agent-pet \
+  -H 'content-type: application/json' \
+  -d '{"state":"running_tool"}'
+```
+
+---
+
+## Implementation notes
+
+- **Zero runtime dependencies**; React is a peer dependency
+- Sprite cells are selected with CSS `background-position`, so **neither side decodes an image**
+- Single-frame pets (packaged Momo, older data, a user-uploaded single image) use `background-size: contain` and stay undistorted
+- Generated artwork is written atomically and survives restarts
+
+---
+
+## Scope
+
+`0.3.0`. Sprite-sheet generation, prompt export, external sheet import, and local or Git installation are supported.
+
+Frame-by-frame animation, community account submission, cloud sync, ESP32 communication, and executable third-party pet plugins are not.
+
+---
+
+## License
+
+[MIT](LICENSE)

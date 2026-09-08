@@ -1,11 +1,14 @@
 {
   "name": "dsh-agent-pet",
   "version": "0.3.0",
-  "description": "A draggable pet that reacts to DeepSeek Harness agent activity.",
+  "description": "A pet in the DeepSeek Harness Web UI that changes pose with your agent, with an eight-pose sprite sheet you can generate from one sentence.",
   "keywords": [
     "deepseek-harness",
     "dsh-plugin",
+    "dsh",
     "agent-pet",
+    "sprite-sheet",
+    "mascot",
     "cordis",
     "web-ui"
   ],
@@ -48,12 +51,14 @@
   "files": [
     "lib",
     "pets",
+    "assets",
     "cordis.patch.yml",
     "README.md",
     "README.en.md",
     "CHANGELOG.md",
     "SECURITY.md",
-    "LICENSE"
+    "LICENSE",
+    "screenshots.json"
   ],
   "publishConfig": {
     "access": "public"
