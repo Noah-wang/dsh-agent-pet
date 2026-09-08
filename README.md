@@ -16,15 +16,11 @@ pnpm dsh plugin --profile web add /absolute/path/to/dsh-agent-pet
 pnpm dsh web
 ```
 
-## 发布后安装
-
-选择并发布 Git 仓库后，用户可以通过 DSH 原生插件命令安装：
+## 从 GitHub 安装
 
 ```bash
-dsh plugin --profile web add github:OWNER/dsh-agent-pet
+dsh plugin --profile web add github:Noah-wang/dsh-agent-pet
 ```
-
-发布前请把 `OWNER` 替换为确认过的 GitHub 用户名或组织名；当前项目不会猜测或代填你的账号。
 
 ## 卸载
 

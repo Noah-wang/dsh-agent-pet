@@ -11,15 +11,11 @@ pnpm dsh plugin --profile web add /absolute/path/to/dsh-agent-pet
 pnpm dsh web
 ```
 
-## Install after publication
-
-Once a Git repository is selected and published:
+## Install from GitHub
 
 ```bash
-dsh plugin --profile web add github:OWNER/dsh-agent-pet
+dsh plugin --profile web add github:Noah-wang/dsh-agent-pet
 ```
-
-Do not copy the placeholder command verbatim. Replace `OWNER` with the verified repository owner.
 
 ## Uninstall
 

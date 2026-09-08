@@ -10,6 +10,14 @@
     "web-ui"
   ],
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noah-wang/dsh-agent-pet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Noah-wang/dsh-agent-pet/issues"
+  },
+  "homepage": "https://github.com/Noah-wang/dsh-agent-pet#readme",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",

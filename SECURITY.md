@@ -22,4 +22,4 @@ Review future functional plugins separately before installation. DSH plugins exe
 
 ## Reporting
 
-Until a public repository is selected, report security issues privately to the package maintainer. Add the repository's private security-advisory link before public release.
+Report security issues privately through [GitHub Security Advisories](https://github.com/Noah-wang/dsh-agent-pet/security/advisories/new). Please do not open a public issue for a suspected vulnerability.
