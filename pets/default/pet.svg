@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" role="img" aria-labelledby="title desc">
+  <title id="title">Momo 云朵猫</title>
+  <desc id="desc">一只紫色耳朵、奶白色身体的云朵猫</desc>
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffdf9"/>
+      <stop offset="1" stop-color="#eee8ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#463b69" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path fill="#7c6cf2" d="M45 59 41 18l35 27zm90 0 4-41-35 27z"/>
+    <path fill="url(#body)" stroke="#51466f" stroke-width="5" stroke-linejoin="round" d="M43 58c7-24 26-35 47-35s40 11 47 35c17 7 27 23 25 40-2 18-16 31-34 34-9 13-22 20-38 20s-29-7-38-20c-18-3-32-16-34-34-2-17 8-33 25-40z"/>
+    <ellipse cx="64" cy="83" rx="8" ry="10" fill="#39324c"/>
+    <ellipse cx="116" cy="83" rx="8" ry="10" fill="#39324c"/>
+    <circle cx="61" cy="79" r="2.5" fill="#fff"/>
+    <circle cx="113" cy="79" r="2.5" fill="#fff"/>
+    <path d="M84 99q6 7 12 0M90 96v7" fill="none" stroke="#635877" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="46" cy="101" rx="10" ry="5" fill="#ffb4c8" opacity=".7"/>
+    <ellipse cx="134" cy="101" rx="10" ry="5" fill="#ffb4c8" opacity=".7"/>
+  </g>
+</svg>

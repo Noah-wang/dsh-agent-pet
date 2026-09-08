@@ -1,0 +1,8 @@
+- insert:
+    - id: agent-pet
+      name: 'dsh-agent-pet'
+      config:
+        dataDir: !!js dshHomePath('agent-pet')
+        apiKeyEnv: OPENAI_API_KEY
+        model: gpt-image-2
+        quality: medium
