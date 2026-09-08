@@ -2,6 +2,19 @@
 
 All notable changes to this project are documented in this file.
 
+## 0.3.0 - 2026-09-08
+
+- Give every state its own pose: one generation now produces a 4×2 sprite sheet
+  of eight poses instead of a single frozen image.
+- Render the matching cell with CSS `background-position`, so no image decoding
+  is needed on either side.
+- Add prompt export: copy a self-contained sprite-sheet prompt and generate the
+  pet in any other image AI. No API key and no provider charges.
+- Add sprite-sheet import: bring back a PNG generated elsewhere, with an
+  adjustable grid for AIs that lay out differently.
+- Keep single-frame pets working; the packaged default and any earlier
+  generated pet still render undistorted.
+
 ## 0.2.0 - 2026-09-08
 
 - Add the AI Pet Studio: describe a pet, pick a style, and generate a

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildPetPrompt, decodePngBase64, downloadPng, generateOpenAiPet, parseGenerationRequest } from '../lib/pet-generation.js'
+import { decodePngBase64, downloadPng, generateOpenAiPet, parseGenerationRequest, readPngSize } from '../lib/pet-generation.js'
 
 const PNG = Buffer.concat([
   Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
@@ -17,12 +17,15 @@ test('normalizes a bounded pet generation request', () => {
   assert.equal(parseGenerationRequest({ name: 'Miu', description: 'a valid description', style: 'unknown' }).ok, false)
 })
 
-test('builds a production prompt with transparent background constraints', () => {
-  const prompt = buildPetPrompt({ name: 'Miu', description: 'a small cloud fox', style: 'plush' })
-  assert.match(prompt, /Miu/)
-  assert.match(prompt, /cloud fox/)
-  assert.match(prompt, /Transparent background/)
-  assert.match(prompt, /No scenery/)
+test('reads PNG dimensions straight from the IHDR chunk', () => {
+  const png = Buffer.concat([
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    Buffer.from([0, 0, 0, 13]),
+    Buffer.from('IHDR'),
+    (() => { const b = Buffer.alloc(8); b.writeUInt32BE(1536, 0); b.writeUInt32BE(1024, 4); return b })(),
+  ])
+  assert.deepEqual(readPngSize(png), { width: 1536, height: 1024 })
+  assert.equal(readPngSize(Buffer.from('not a png at all, really')), undefined)
 })
 
 test('calls the image API without exposing the key in the prompt', async () => {

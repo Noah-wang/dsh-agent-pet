@@ -27,7 +27,15 @@ Restart the Web UI after changing the installed plugin set.
 
 ## Pet Studio
 
-Hover the pet and click 🎨 to open the studio. Enter a name, a visual description (8–800 characters), and a style preset, then press "开始绘制" to generate a transparent PNG avatar that replaces the current pet. "恢复默认" restores the packaged Momo.
+Hover the pet and click 🎨 to open the studio. Enter a name, a visual description (8–800 characters), and a style preset, then press "开始绘制" to generate a transparent **eight-pose sprite sheet** that replaces the current pet. "恢复默认" restores the packaged Momo.
+
+### One pose per state
+
+A single generation draws the same pet in eight poses on a 4×2 grid, in this order: `idle`, `thinking`, `running_tool`, `waiting_approval`, `done`, `error`, `resting`, `greeting`. Generating eight separate images would yield eight different animals; one generation keeps the character consistent. The UI picks the matching cell with CSS `background-position` and never decodes the image. The last two poses have no trigger yet and are reserved.
+
+### Generate in another AI (no API key needed)
+
+Expand "用别的 AI 生成": fill in a name and description, press "生成提示词", copy the self-contained prompt into any image AI, ask it for a transparent 4×2 sprite sheet PNG, then press "导入精灵表 PNG" to bring it back. Adjust the column/row inputs if that AI lays the poses out differently; 1×1 imports a single frame. The image dimensions must divide evenly by the grid. This path costs nothing and needs no credential.
 
 Generation needs an image API key. The host resolves `OPENAI_API_KEY` through the DSH credential service; the studio says so and sends nothing when the key is missing. `apiKeyEnv`, `model` (default `gpt-image-2`), `baseURL`, `quality`, and `dataDir` are configurable. Style presets: `auto`, `pixel`, `sticker`, `plush`, `flat-vector`, `3d-toy`.
 
