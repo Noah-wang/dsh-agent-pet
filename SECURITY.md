@@ -18,6 +18,10 @@ Sprite sheets imported from another image AI go through the same validation as g
 
 Some OpenAI-compatible endpoints return an image URL instead of inline base64. In that case the host downloads the image itself, over HTTPS only, without following redirects, under a separate timeout and the same size bound, and stores it only if the bytes carry a PNG signature. No credential is sent with that download. Avatars and metadata are written atomically with restrictive permissions below the configured DSH data directory, and one generation runs at a time under a request timeout.
 
+## Preferences
+
+Interface preferences (position, hidden state, bubble, animation) are validated, clamped, and written atomically to the same data directory. They contain no conversation data, no credentials, and no identifiers.
+
 ## Pet packages
 
 `pet.md` is declarative. The parser accepts a small frontmatter subset and local relative avatar paths. It does not evaluate JavaScript, shell commands, HTML, prompts, or remote assets.

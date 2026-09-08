@@ -61,7 +61,7 @@ The packaged cloud cat Momo ships with the plugin and animates across all six st
 
 <img src="assets/studio.png" alt="Pet Studio: name, description, style, eight-pose preview" width="420" align="right">
 
-Hover the pet and click 🎨. Enter a name, a description (8–800 characters), pick a style, and press "开始绘制".
+Open **Settings → 宠物**, or hover the pet and click 🎨. Enter a name, a description (8–800 characters), pick a style, and press "开始绘制".
 
 The plugin generates a transparent 4×2 sprite sheet and swaps it in immediately. "恢复默认" restores Momo.
 
@@ -84,6 +84,18 @@ If that AI lays poses out differently, change the column/row inputs; `1×1` impo
 This path needs no credential and costs nothing.
 
 <br clear="right">
+
+---
+
+## Settings
+
+<p align="center">
+  <img src="assets/settings.png" alt="The Pet section in Settings: studio plus appearance switches" width="100%">
+</p>
+
+Installing adds a **宠物** section to Settings: the full studio on top, appearance switches below — bubble, animation, hide, and reset position.
+
+Position, hidden state, and those switches are stored on the host, so they **survive reloads and restarts**.
 
 ---
 
@@ -143,7 +155,7 @@ Only bytes carrying a valid PNG signature are stored; generated SVG or HTML is r
 
 ## Interaction and customization
 
-- Drag to move; × hides it into a 🐾 button that brings it back
+- Drag to move; × hides it into a 🐾 button that brings it back. Both are remembered across reloads
 - Honors `prefers-reduced-motion` by disabling every animation
 - Edit `pets/default/pet.md` to change the name, artwork, and the short line shown per state. `avatar` accepts only a relative path beside `pet.md`; the Markdown never executes scripts, commands, or HTML
 
@@ -168,7 +180,7 @@ curl -X POST http://127.0.0.1:3080/api/agent-pet \
 
 ## Scope
 
-`0.3.0`. Sprite-sheet generation, prompt export, external sheet import, and local or Git installation are supported.
+`0.4.0`. Sprite-sheet generation, prompt export, external sheet import, a Settings section with durable preferences, and npm, Git, or local installation are supported.
 
 Frame-by-frame animation, community account submission, cloud sync, ESP32 communication, and executable third-party pet plugins are not.
 

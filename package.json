@@ -1,7 +1,7 @@
 {
   "name": "dsh-agent-pet",
-  "version": "0.3.0",
-  "description": "A pet in the DeepSeek Harness Web UI that changes pose with your agent, with an eight-pose sprite sheet you can generate from one sentence.",
+  "version": "0.4.0",
+  "description": "Eight poses, one per agent state — a DeepSeek Harness Web UI pet whose sprite sheet you can generate from one sentence.",
   "keywords": [
     "deepseek-harness",
     "dsh-plugin",
@@ -38,7 +38,7 @@
   },
   "scripts": {
     "test": "node --test",
-    "check": "node --check lib/index.js && node --check lib/client.js && node --check lib/state.js && node --check lib/pet-config.js && node --check lib/pet-generation.js && node --check lib/pet-store.js && node --check lib/sprite-sheet.js",
+    "check": "node --check lib/index.js && node --check lib/client.js && node --check lib/state.js && node --check lib/pet-config.js && node --check lib/pet-generation.js && node --check lib/pet-store.js && node --check lib/sprite-sheet.js && node --check lib/pet-prefs.js",
     "prepack": "npm test && npm run check"
   },
   "engines": {

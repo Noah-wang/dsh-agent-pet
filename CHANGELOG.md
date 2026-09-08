@@ -2,6 +2,18 @@
 
 All notable changes to this project are documented in this file.
 
+## 0.4.0 - 2026-09-08
+
+- Add a Pet section to Settings with the full studio and appearance controls,
+  so generating a pet no longer requires discovering the hover-only 🎨 button.
+- Persist position, hidden state, bubble, and animation preferences on the
+  host. They previously lived in component state and were lost on every reload.
+- Add `GET`/`POST /api/agent-pet/prefs` with validation, clamping, atomic
+  writes, and a revision that lets the overlay ignore its own echo while
+  dragging.
+- Register the settings page through `slots.inject`, so a profile without the
+  settings shell simply skips it.
+
 ## 0.3.0 - 2026-09-08
 
 - Give every state its own pose: one generation now produces a 4×2 sprite sheet
