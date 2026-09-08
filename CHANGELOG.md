@@ -12,6 +12,9 @@ All notable changes to this project are documented in this file.
   never reaches browser state or API responses.
 - Store generated avatars atomically below the DSH data directory and reload
   them on restart.
+- Accept OpenAI-compatible endpoints that return an image URL instead of inline
+  base64; the host downloads it over HTTPS only, without redirects, and stores
+  it only after PNG validation.
 
 ## 0.1.0 - 2026-09-08
 

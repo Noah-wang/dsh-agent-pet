@@ -12,7 +12,9 @@ Generation is an explicit user action in the studio and may incur provider charg
 
 The API key is resolved by the DSH credential service inside the host process. It is never sent to the browser, written to pet metadata, or included in error messages; provider errors are reduced to bounded user-facing text.
 
-Request bodies, prompts, provider responses, and image bytes are size-bounded. Only a response with a valid PNG signature is stored; generated SVG or HTML is rejected rather than executed. Avatars and metadata are written atomically with restrictive permissions below the configured DSH data directory, and one generation runs at a time under a request timeout.
+Request bodies, prompts, provider responses, and image bytes are size-bounded. Only a response with a valid PNG signature is stored; generated SVG or HTML is rejected rather than executed.
+
+Some OpenAI-compatible endpoints return an image URL instead of inline base64. In that case the host downloads the image itself, over HTTPS only, without following redirects, under a separate timeout and the same size bound, and stores it only if the bytes carry a PNG signature. No credential is sent with that download. Avatars and metadata are written atomically with restrictive permissions below the configured DSH data directory, and one generation runs at a time under a request timeout.
 
 ## Pet packages
 
