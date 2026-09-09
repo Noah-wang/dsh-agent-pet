@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/poses.png" alt="Momo's eight poses: idle, thinking, running_tool, waiting_approval, done, error, resting, greeting" width="100%">
+  <img src="assets/poses.gif" alt="Momo's eight looping animations: idle, thinking, running_tool, waiting_approval, done, error, resting, greeting" width="100%">
 </p>
 
 <h1 align="center">DSH Agent Pet</h1>
@@ -30,24 +30,24 @@
 
 ---
 
-## One pose per state
+## One looping animation per state
 
-Most desktop pets are a single image faking motion with transforms. This one is not: **a single generation draws eight poses of the same pet**, and the UI switches to the matching cell as the agent's state changes.
+Most desktop pets are a single image faking motion with transforms. This one is not: **a single generation draws a 6×8 frame-by-frame sprite sheet — eight states, six frames each**. The UI jumps to the row for the current agent state and plays it with CSS `steps(6)`.
 
-| State | Pose | When |
+| State | Loop | When |
 | --- | --- | --- |
-| `idle` | standing, three-quarter view | nothing running |
-| `thinking` | paw at chin, looking up | the agent is thinking |
-| `running_tool` | running in profile | a tool is executing |
-| `waiting_approval` | sitting up, looking at you | waiting for your confirmation |
-| `done` | jumping, paws raised | finished |
-| `error` | head down, shoulders slumped | something failed |
-| `resting` | curled up asleep | reserved |
-| `greeting` | waving a paw | reserved |
+| `idle` | breathing, ears and tail drifting | nothing running |
+| `thinking` | paw tapping the chin, head tilting back | the agent is thinking |
+| `running_tool` | side-view run cycle | a tool is executing |
+| `waiting_approval` | head tilting toward you, one blink | waiting for your confirmation |
+| `done` | crouch, leap with paws raised, land | finished |
+| `error` | shoulders sagging and lifting | something failed |
+| `resting` | curled up asleep, breathing | reserved |
+| `greeting` | raised paw swinging side to side | reserved |
 
-All eight come from **one generation**, so it is one character. Generating eight times separately yields eight similar-but-different animals — text-to-image has no memory, and character consistency is the whole difficulty here.
+All forty-eight cells come from **one generation**, so it is one character. Generating separately yields similar-but-different animals — text-to-image has no memory, and character consistency is the whole difficulty here.
 
-The last two poses have no trigger yet; reserving the cells now means adding states later will not require regenerating artwork.
+The last two rows have no trigger yet; reserving them now means adding states later will not require regenerating artwork.
 
 ---
 
@@ -63,7 +63,7 @@ The packaged cloud cat Momo ships with the plugin and animates across all six st
 
 Open **Settings → 宠物**, or hover the pet and click 🎨. Enter a name, a description (8–800 characters), pick a style, and press "开始绘制".
 
-The plugin generates a transparent 4×2 sprite sheet and swaps it in immediately. "恢复默认" restores Momo.
+The plugin generates a transparent 6×8 frame-by-frame sheet and swaps it in immediately. "恢复默认" restores Momo.
 
 Style presets: `auto`, `pixel`, `sticker`, `plush`, `flat-vector`, `3d-toy`.
 
@@ -77,9 +77,9 @@ Drawing needs an image API key, resolved from the DSH credential service as `OPE
 
 Expand "用别的 AI 生成" and press "生成提示词" for a **self-contained** prompt.
 
-Paste it into any image AI, ask for a transparent 4×2 sprite sheet, then press "导入精灵表 PNG" and pick the file.
+Paste it into any image AI, ask for a transparent 6×8 sprite sheet (eight state rows, six frames each), then press "⬆ 上传精灵表 PNG" and pick the file.
 
-If that AI lays poses out differently, change the column/row inputs; `1×1` imports a single frame. The image dimensions must divide evenly by the grid.
+If that AI lays things out differently, change the column/row inputs; `1×1` imports a single frame. The image dimensions need not divide evenly by the grid — the UI scales the sheet to its own cell size.
 
 This path needs no credential and costs nothing.
 
@@ -172,7 +172,7 @@ curl -X POST http://127.0.0.1:3080/api/agent-pet \
 ## Implementation notes
 
 - **Zero runtime dependencies**; React is a peer dependency
-- Sprite cells are selected with CSS `background-position`, so **neither side decodes an image**
+- Sprite cells are selected with pixel `background-position` and advanced with CSS `steps()`, so **neither side decodes an image**
 - Single-frame pets (packaged Momo, older data, a user-uploaded single image) use `background-size: contain` and stay undistorted
 - Generated artwork is written atomically and survives restarts
 
@@ -180,9 +180,9 @@ curl -X POST http://127.0.0.1:3080/api/agent-pet \
 
 ## Scope
 
-`0.4.0`. Sprite-sheet generation, prompt export, external sheet import, a Settings section with durable preferences, and npm, Git, or local installation are supported.
+`0.5.0`. Frame-by-frame sheet generation, prompt export, external sheet import, a Settings section with durable preferences, and npm, Git, or local installation are supported.
 
-Frame-by-frame animation, community account submission, cloud sync, ESP32 communication, and executable third-party pet plugins are not.
+Community account submission, cloud sync, ESP32 communication, and executable third-party pet plugins are not.
 
 ---
 

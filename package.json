@@ -1,7 +1,7 @@
 {
   "name": "dsh-agent-pet",
-  "version": "0.4.0",
-  "description": "Eight poses, one per agent state — a DeepSeek Harness Web UI pet whose sprite sheet you can generate from one sentence.",
+  "version": "0.5.0",
+  "description": "Eight looping animations, one per agent state — a DeepSeek Harness Web UI pet whose frame-by-frame sprite sheet you can generate from one sentence.",
   "keywords": [
     "deepseek-harness",
     "dsh-plugin",

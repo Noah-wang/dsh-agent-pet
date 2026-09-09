@@ -2,6 +2,19 @@
 
 All notable changes to this project are documented in this file.
 
+## 0.5.0 - 2026-09-08
+
+- The pet now actually animates. A generation produces a 6×8 frame-by-frame
+  sheet — eight states, six frames each — instead of one static pose per state.
+- Play the current state's row with CSS `steps()`, advancing
+  `background-position-x` one cell per frame. Nothing decodes an image.
+- Position cells in pixels rather than percentages; percentage offsets do not
+  land on cell boundaries once frames advance.
+- Drop the import divisibility check. The UI scales the sheet onto its own cell
+  grid, so a 1024-wide sheet split into 6 frames is fine.
+- Keep older pose grids and single-frame pets rendering unchanged; the layout
+  records which kind it is.
+
 ## 0.4.0 - 2026-09-08
 
 - Add a Pet section to Settings with the full studio and appearance controls,
