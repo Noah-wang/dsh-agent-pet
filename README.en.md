@@ -79,7 +79,7 @@ Expand "用别的 AI 生成" and press "生成提示词" for a **self-contained*
 
 Paste it into any image AI, ask for a transparent 6×8 sprite sheet (eight state rows, six frames each), then press "⬆ 上传精灵表 PNG" and pick the file.
 
-If that AI lays things out differently, change the column/row inputs; `1×1` imports a single frame. The image dimensions need not divide evenly by the grid — the UI scales the sheet to its own cell size.
+**You never tell the plugin how the sheet is laid out.** On import it reads the alpha channel and counts the transparent gutters between cells, so a different grid — or a single image — just works. The collapsed "识别错了？手动指定" is only there for a sheet with no transparent background or cells packed too tightly to separate.
 
 This path needs no credential and costs nothing.
 

@@ -14,6 +14,11 @@ All notable changes to this project are documented in this file.
   grid, so a 1024-wide sheet split into 6 frames is fine.
 - Keep older pose grids and single-frame pets rendering unchanged; the layout
   records which kind it is.
+- Detect the grid on import instead of asking. The browser reads the alpha
+  channel and counts the transparent gutters between cells, which resolves the
+  eight-row sheet, the older four-column one, and a single image correctly. The
+  column/row inputs move behind a collapsed override for sheets with no
+  transparent background.
 
 ## 0.4.0 - 2026-09-08
 
